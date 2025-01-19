@@ -8,17 +8,21 @@ import LanguageDropdown from './LanguageDropdown';
 import UserDropdown from "./UserDropdown";
 import IconWithBadge from "./IconWithBadge";
 import { useMediaQuery } from "@mui/material";
+import { useNavigate } from "react-router-dom";
 
 const Navbar = ({ onSearchChange }) => {
   const isMobile = useMediaQuery("(max-width:768px)");
   const handleSearchInputChange = (event) => {
     onSearchChange(event.target.value);
   };
+  const navigate = useNavigate();
   return (
     <AppBar position="static" sx={{ backgroundColor: "#fff", color: "#000" }}>
       {!isMobile ? <>
         <Toolbar>
-          <Typography variant="h6" sx={{ flexGrow: 1, fontWeight: "bold", color: '#45C0CD', fontSize: '2rem' }}>
+          <Typography variant="h6" sx={{ flexGrow: 1, fontWeight: "bold",cursor:'pointer', color: '#45C0CD', fontSize: '2rem' }} onClick={() => {
+            navigate('/');
+          }}>
             <span className={styles.geostarregular}>s</span>Stella
           </Typography>
           <Box sx={{ display: "flex", alignItems: "center", flexGrow: 3 }}>
@@ -47,7 +51,9 @@ const Navbar = ({ onSearchChange }) => {
         <Toolbar>
           <Grid container spacing={2}>
             <Grid item xs={6} sm={6}>
-              <Typography variant="h6" sx={{ flexGrow: 1, fontWeight: "bold", color: '#45C0CD', fontSize: '2rem' }}>
+              <Typography variant="h6" sx={{ flexGrow: 1, fontWeight: "bold", cursor:'pointer',color: '#45C0CD', fontSize: '2rem' }} onClick={() => {
+                navigate('/');
+              }}>
                 <span className={styles.geostarregular}>s</span>Stella
               </Typography>
             </Grid>
@@ -76,7 +82,7 @@ const Navbar = ({ onSearchChange }) => {
             <br />
           </Grid>
 
-          
+
 
 
 
