@@ -1,0 +1,199 @@
+[
+    {
+        "uniqueId": "1",
+        "name": "Soft Cotton Shirt",
+        "price": 450,
+        "totalItems": 12,
+        "brand": "Uniqlo",
+        "image": "server.jpg",
+        "color": "green",
+        "size": [
+            "S",
+            "M",
+            "L",
+            "XL"
+        ],
+        "isNew": true,
+        "category": "Shirts"
+    },
+    {
+        "uniqueId": "2",
+        "name": "Classic Long Sleeve",
+        "price": 550,
+        "totalItems": 8,
+        "brand": "Uniqlo",
+        "image": "hoodie.jpg",
+        "color": "blue",
+        "size": [
+            "M",
+            "L",
+            "XL"
+        ],
+        "isNew": false,
+        "category": "Shirts"
+    },
+    {
+        "uniqueId": "3",
+        "name": "Zip-Up Neck Shirt",
+        "price": 560,
+        "totalItems": 10,
+        "brand": "Uniqlo",
+        "image": "normaldress.jpg",
+        "color": "red",
+        "size": [
+            "S",
+            "M",
+            "L"
+        ],
+        "isNew": true,
+        "category": "Shirts"
+    },
+    {
+        "uniqueId": "4",
+        "name": "Stretch Slim Pants",
+        "price": 470,
+        "totalItems": 15,
+        "brand": "Adidas",
+        "image": "jeanswithshoe.jpg",
+        "color": "orange",
+        "size": [
+            "S",
+            "M",
+            "L",
+            "XL",
+            "XXL"
+        ],
+        "isNew": true,
+        "category": "Pants"
+    },
+    {
+        "uniqueId": "5",
+        "name": "Relaxed Fit Pants",
+        "price": 765,
+        "totalItems": 7,
+        "brand": "Nike",
+        "color": "white",
+        "image": "jeanwithtshirt.jpg",
+        "size": [
+            "M",
+            "L",
+            "XL"
+        ],
+        "isNew": false,
+        "category": "Pants"
+    },
+    {
+        "uniqueId": "6",
+        "name": "Formal Slim Pants",
+        "price": 380,
+        "totalItems": 5,
+        "brand": "Puma",
+        "image": "pickup.jpg",
+        "color": "black",
+        "size": [
+            "S",
+            "M",
+            "L"
+        ],
+        "isNew": true,
+        "category": "Pants"
+    },
+    {
+        "uniqueId": "7",
+        "name": "Casual Denim Shirt",
+        "price": 455,
+        "totalItems": 9,
+        "brand": "New Balance",
+        "image": "normaltshirt.jpg",
+        "color": "yellow",
+        "size": [
+            "M",
+            "L",
+            "XL"
+        ],
+        "isNew": false,
+        "category": "Shirts"
+    },
+    {
+        "uniqueId": "8",
+        "name": "Tapered Joggers",
+        "price": 350,
+        "totalItems": 20,
+        "brand": "Nike",
+        "color": "gold",
+        "image": "casual.jpg",
+        "size": [
+            "S",
+            "M",
+            "L",
+            "XL"
+        ],
+        "isNew": true,
+        "category": "Pants"
+    },
+    {
+        "uniqueId": "9",
+        "name": "Wedding Suit",
+        "price": 465,
+        "totalItems": 7,
+        "color": "black",
+        "brand": "Nike",
+        "image": "suit.jpg",
+        "size": [
+            "M",
+            "L",
+            "XL"
+        ],
+        "isNew": false,
+        "category": "Pants"
+    },
+    {
+        "uniqueId": "10",
+        "name": "Winter Suit",
+        "price": 880,
+        "color": "white",
+        "totalItems": 5,
+        "brand": "Puma",
+        "image": "winter.jpg",
+        "size": [
+            "S",
+            "M",
+            "L"
+        ],
+        "isNew": true,
+        "category": "Pants"
+    },
+    {
+        "uniqueId": "11",
+        "name": "Casual T-Shirt",
+        "price": 555,
+        "totalItems": 9,
+        "color": "white",
+        "brand": "New Balance",
+        "image": "normaltshirt.jpg",
+        "size": [
+            "M",
+            "L",
+            "XL"
+        ],
+        "isNew": false,
+        "category": "Shirts"
+    },
+    {
+        "uniqueId": "12",
+        "name": "Jeans and T-Shirt",
+        "price": 650,
+        "totalItems": 20,
+        "color": "green",
+        "brand": "Nike",
+        "image": "jeans.jpg",
+        "size": [
+            "S",
+            "M",
+            "L",
+            "XL"
+        ],
+        "isNew": true,
+        "category": "Pants"
+    }
+]
