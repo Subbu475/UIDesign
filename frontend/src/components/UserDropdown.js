@@ -1,10 +1,13 @@
 import React, { useState } from 'react';
 import { IconButton, Menu, MenuItem, Typography, Avatar } from '@mui/material';
 import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
+import { useNavigate } from 'react-router-dom';
 
 const UserDropdown = () => {
     const [anchorEl, setAnchorEl] = useState(null);
     const [selectedOption, setSelectedOption] = useState(null);
+
+    const navigate = useNavigate();
 
     const handleClick = (event) => {
         setAnchorEl(event.currentTarget);
@@ -15,6 +18,9 @@ const UserDropdown = () => {
     };
 
     const handleSelectOption = (option) => {
+        if (option === "Profile") {
+            navigate('/profile')
+        }
         setSelectedOption(option);
         setAnchorEl(null);
     };

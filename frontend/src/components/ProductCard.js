@@ -3,8 +3,10 @@ import { Card, CardMedia, CardContent, Typography, Chip, Box, IconButton } from 
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import CurrencyRupeeIcon from '@mui/icons-material/CurrencyRupee';
+import { useNavigate } from "react-router-dom";
 
 const ProductCard = ({ name, price, image, isNew, brand, uniqueId, totalItems, size }) => {
+  const navigate = useNavigate();
   const imagePath = require(`../assets/shirts/${image}`);
   const [isWishlisted, setIsWishlisted] = useState(false);
 
@@ -14,10 +16,10 @@ const ProductCard = ({ name, price, image, isNew, brand, uniqueId, totalItems, s
   return (
     <Card sx={{
       width: {
-        xs: "100%", sm: "90%", md: "350px"
+        xs: "100%", sm: "90%", md: "300px", lg: "310px"
       }
-      , position: "relative"
-    }}>
+      , position: "relative", cursor: 'pointer'
+    }} >
       {isNew && (
         <Chip
           label="New Arrival"
@@ -32,6 +34,9 @@ const ProductCard = ({ name, price, image, isNew, brand, uniqueId, totalItems, s
         image={imagePath}
         alt={name}
         sx={{ borderRadius: '20px' }}
+        onClick={(e) => {
+          navigate(`/product/${uniqueId}`)
+        }}
       />
       <CardContent>
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
@@ -45,7 +50,9 @@ const ProductCard = ({ name, price, image, isNew, brand, uniqueId, totalItems, s
         </div>
 
         <Typography variant="h6">{name}</Typography>
-        <div style={{ display: 'flex', justifyContent: 'space-between', marginTop: '10px' }}>
+        <div style={{ display: 'flex', justifyContent: 'space-between', marginTop: '10px' }} onClick={(e) => {
+          navigate(`/product/${uniqueId}`)
+        }}>
           <Typography sx={{ display: 'flex', alignItems: 'center', fontSize: '1.2rem' }}>
             <CurrencyRupeeIcon /> {price}
           </Typography>

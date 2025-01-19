@@ -1,37 +1,56 @@
+
 import React, { useEffect, useState } from "react";
-import { Box, Typography, List, ListItem, Checkbox, FormControlLabel, Button, TextField, InputAdornment, Avatar, ListItemAvatar, Slider } from "@mui/material";
-import ArrowDropUpIcon from '@mui/icons-material/ArrowDropUp';
-import Products from '../utils/products.json'
-import SearchIcon from '@mui/icons-material/Search';
+import {
+  Box,
+  Typography,
+  List,
+  ListItem,
+  Checkbox,
+  FormControlLabel,
+  Button,
+  TextField,
+  InputAdornment,
+  Avatar,
+  ListItemAvatar,
+  Slider,
+  Modal,
+  IconButton
+} from "@mui/material";
+import ArrowDropUpIcon from "@mui/icons-material/ArrowDropUp";
+import SearchIcon from "@mui/icons-material/Search";
+import { useMediaQuery } from "@mui/material";
+import CloseIcon from "@mui/icons-material/Close";
 
-import nikeLogo from '../assets/brands/Nike.png';
-import adidasLogo from '../assets/brands/Adidas.png';
-
-import nbLogo from '../assets/brands/New Balance.png';
-import pumaLogo from '../assets/brands/Puma.png';
-import uniqloLogo from '../assets/brands/Uniqlo.png';
-
-
+import Products from "../utils/products.json";
+import nikeLogo from "../assets/brands/Nike.png";
+import adidasLogo from "../assets/brands/Adidas.png";
+import nbLogo from "../assets/brands/New Balance.png";
+import pumaLogo from "../assets/brands/Puma.png";
+import uniqloLogo from "../assets/brands/Uniqlo.png";
 
 const SidebarFilter = ({ onFilterChange }) => {
+  const isMobile = useMediaQuery("(max-width:900px)");
+  const [modalOpen, setModalOpen] = useState(false);
+
   const [brands, setBrand] = useState([]);
   const [filteredBrands, setFilteredBrands] = useState([]);
-  const [searchTerm, setSearchTerm] = useState('');
-  const [priceRange, setPriceRange] = useState([100, 700])
+  const [searchTerm, setSearchTerm] = useState("");
+  const [priceRange, setPriceRange] = useState([100, 700]);
   const [sizes, setSizes] = useState([]);
   const [activeSize, setActiveSize] = useState(null);
-  const [colors, setsetColors] = useState([]);
+  const [colors, setColors] = useState([]);
   const [activeColor, setActiveColor] = useState(null);
+  const [selectedBrands, setSelectedBrands] = useState([]);
 
   const fetchBrands = () => {
-    let getBrands = Products?.map((item) => item?.brand);
-    let getSize = Products?.flatMap((item) => item?.size);
-    const colors = [...new Set(Products.map(product => product.color))];
-    setsetColors(colors);
-    setSizes([...Array.from(new Set(getSize)), 'Clear']);
+    const getBrands = Products?.map((item) => item?.brand);
+    const getSize = Products?.flatMap((item) => item?.size);
+    const uniqueColors = [...new Set(Products.map((product) => product.color))];
+    setColors(uniqueColors);
+    setSizes([...Array.from(new Set(getSize)), "Clear"]);
     setBrand(Array.from(new Set(getBrands)));
     setFilteredBrands(Array.from(new Set(getBrands)));
-  }
+  };
 
   const handleSearch = (event) => {
     const value = event.target.value;
@@ -47,7 +66,7 @@ const SidebarFilter = ({ onFilterChange }) => {
     setActiveColor(color);
     onFilterChange({ color });
   };
-  const [selectedBrands, setSelectedBrands] = useState([]);
+
   const handleBrandClick = (e, brand) => {
     const updatedBrands = e.target.checked
       ? [...selectedBrands, brand]
@@ -67,35 +86,40 @@ const SidebarFilter = ({ onFilterChange }) => {
   };
 
   const handleSizeClick = (size) => {
-    if (size === 'Clear') {
-      setActiveSize("")
-      onFilterChange({ size });
+    if (size === "Clear") {
+      setActiveSize("");
+      onFilterChange({ size: null });
     } else {
       setActiveSize(size);
       onFilterChange({ size });
     }
-
   };
 
   useEffect(() => {
     fetchBrands();
-  }, [])
-  return (
-    <Box>
-      <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+  }, []);
+
+  const SidebarContent = () => (
+    <Box sx={{ overflow: 'auto' }}>
+      <Box sx={{ display: "flex", justifyContent: "space-between" }}>
         <Typography variant="h6" sx={{ mb: 2 }}>
           Filter
         </Typography>
-        <Typography sx={{ color: '#45C0CD' }}>
-          Advanced
-        </Typography>
-      </div>
+        <Typography sx={{ color: "#45C0CD" }}>Advanced</Typography>
+      </Box>
 
-      <Box sx={{ mb: 3, borderRadius: '10px', boxShadow: '0px 4px 8px rgba(0, 0, 0, 0.1)', padding: '10px 20px' }}>
-        <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+      <Box
+        sx={{
+          mb: 3,
+          borderRadius: "10px",
+          boxShadow: "0px 4px 8px rgba(0, 0, 0, 0.1)",
+          padding: "10px 20px",
+        }}
+      >
+        <Box sx={{ display: "flex", justifyContent: "space-between" }}>
           <Typography variant="subtitle1">Brand</Typography>
           <ArrowDropUpIcon />
-        </div>
+        </Box>
 
         <TextField
           fullWidth
@@ -115,35 +139,31 @@ const SidebarFilter = ({ onFilterChange }) => {
 
         <List>
           {filteredBrands.map((brand, index) => {
-
-            let brandLogo;
-            if (brand === 'Nike') brandLogo = nikeLogo;
-            else if (brand === 'Adidas') brandLogo = adidasLogo;
-            else if (brand === 'Puma') brandLogo = pumaLogo;
-            else if (brand === 'New Balance') brandLogo = nbLogo;
-            else if (brand === 'Uniqlo') brandLogo = uniqloLogo;
-            else brandLogo = '';
+            const brandLogo =
+              {
+                Nike: nikeLogo,
+                Adidas: adidasLogo,
+                Puma: pumaLogo,
+                "New Balance": nbLogo,
+                Uniqlo: uniqloLogo,
+              }[brand] || "";
 
             const itemCount = countItemsForBrand(brand);
 
             return (
-              <ListItem key={index} disablePadding sx={{ display: 'flex', alignItems: 'center' }}>
-
+              <ListItem
+                key={index}
+                disablePadding
+                sx={{ display: "flex", alignItems: "center" }}
+              >
                 <FormControlLabel
-                  control={<Checkbox />}
+                  control={<Checkbox checked={selectedBrands.includes(brand)}/>}
                   label=""
-                  onChange={(e) => {
-                    handleBrandClick(e, brand);
-                  }}
+                  onChange={(e) => handleBrandClick(e, brand)}
                 />
 
-
                 <ListItemAvatar sx={{ mx: 1 }}>
-                  <Avatar
-                    src={brandLogo}
-                    alt={brand}
-                    sx={{ width: 24, height: 24 }}
-                  />
+                  <Avatar src={brandLogo} alt={brand} sx={{ width: 24, height: 24 }} />
                 </ListItemAvatar>
 
                 <Typography>{brand}</Typography>
@@ -155,12 +175,20 @@ const SidebarFilter = ({ onFilterChange }) => {
           })}
         </List>
       </Box>
-      <Box sx={{ mb: 3, borderRadius: '10px', boxShadow: '0px 4px 8px rgba(0, 0, 0, 0.1)', padding: '10px 20px' }}>
-        <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+
+      
+      <Box
+        sx={{
+          mb: 3,
+          borderRadius: "10px",
+          boxShadow: "0px 4px 8px rgba(0, 0, 0, 0.1)",
+          padding: "10px 20px",
+        }}
+      >
+        <Box sx={{ display: "flex", justifyContent: "space-between" }}>
           <Typography variant="subtitle1">Price</Typography>
           <ArrowDropUpIcon />
-        </div>
-        <br />
+        </Box>
         <Slider
           value={priceRange}
           onChange={handlePriceChange}
@@ -169,27 +197,35 @@ const SidebarFilter = ({ onFilterChange }) => {
           min={0}
           max={1000}
           step={10}
-          sx={{ mt: 2, color: '#45C0CD' }}
+          sx={{ mt: 2, color: "#45C0CD" }}
         />
         <Typography variant="body2" color="textSecondary" sx={{ mt: 1 }}>
           {`₹${priceRange[0]} - ₹${priceRange[1]}`}
         </Typography>
       </Box>
-      <Box sx={{ borderRadius: '10px', boxShadow: '0px 4px 8px rgba(0, 0, 0, 0.1)', padding: '10px 20px' }}>
-        <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+
+     
+      <Box
+        sx={{
+          borderRadius: "10px",
+          boxShadow: "0px 4px 8px rgba(0, 0, 0, 0.1)",
+          padding: "10px 20px",
+        }}
+      >
+        <Box sx={{ display: "flex", justifyContent: "space-between" }}>
           <Typography variant="subtitle1">Size</Typography>
           <ArrowDropUpIcon />
-        </div>
+        </Box>
 
-        <List sx={{ display: 'flex', flexWrap: 'wrap', gap: 1 }}>
+        <List sx={{ display: "flex", flexWrap: "wrap", gap: 1 }}>
           {sizes.map((size, index) => (
-            <ListItem key={index} disablePadding sx={{ width: 'auto' }}>
+            <ListItem key={index} disablePadding sx={{ width: "auto" }}>
               <Button
                 variant="outlined"
                 sx={{
                   borderColor: activeSize === size ? "#45C0CD" : "#ccc",
                   color: activeSize === size ? "#45C0CD" : "#000",
-                  '&:hover': {
+                  "&:hover": {
                     borderColor: "#45C0CD",
                     backgroundColor: "#f0faff",
                   },
@@ -204,29 +240,40 @@ const SidebarFilter = ({ onFilterChange }) => {
           ))}
         </List>
       </Box>
-      <Box sx={{ borderRadius: '10px', boxShadow: '0px 4px 8px rgba(0, 0, 0, 0.1)', padding: '10px 20px' }}>
-        <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-          <Typography variant="subtitle1">colors</Typography>
+
+      
+      <Box
+        sx={{
+          borderRadius: "10px",
+          boxShadow: "0px 4px 8px rgba(0, 0, 0, 0.1)",
+          padding: "10px 20px",
+        }}
+      >
+        <Box sx={{ display: "flex", justifyContent: "space-between" }}>
+          <Typography variant="subtitle1">Colors</Typography>
           <ArrowDropUpIcon />
-        </div>
-        <List sx={{ display: 'flex', flexWrap: 'wrap', gap: 1 }}>
+        </Box>
+        <List sx={{ display: "flex", flexWrap: "wrap", gap: 1 }}>
           {colors.map((color, index) => (
-            <ListItem key={index} disablePadding sx={{ width: 'auto' }}>
+            <ListItem key={index} disablePadding sx={{ width: "auto" }}>
               <Button
                 sx={{
                   width: 40,
                   height: 40,
-                  borderRadius: '50%',
+                  borderRadius: "50%",
                   backgroundColor: color,
-                  border: activeColor === color ? '3px solid #45C0CD' : '2px solid #ccc', // Border highlighting
-                  '&:hover': {
-                    borderColor: "#45C0CD", // Hover effect
-                    backgroundColor: "#f0faff", // Light background on hover
+                  border:
+                    activeColor === color
+                      ? "3px solid #45C0CD"
+                      : "2px solid #ccc",
+                  "&:hover": {
+                    borderColor: "#45C0CD",
+                    backgroundColor: "#f0faff",
                   },
-                  p: 0, // Remove padding
-                  minWidth: 'auto', // Optional: make sure button size doesn't get too big
+                  p: 0,
+                  minWidth: "auto",
                 }}
-                onClick={() => handleColorClick(color)} // Handle color circle click
+                onClick={() => handleColorClick(color)}
               />
             </ListItem>
           ))}
@@ -234,7 +281,48 @@ const SidebarFilter = ({ onFilterChange }) => {
       </Box>
     </Box>
   );
+
+  return (
+    <Box>
+      {!isMobile ? (
+        <SidebarContent />
+      ) : (
+        <Modal open={modalOpen} onClose={() => setModalOpen(false)}>
+          <Box
+            sx={{
+              position: "absolute",
+              top: "50%",
+              left: "50%",
+              transform: "translate(-50%, -50%)",
+              width: 300,
+              bgcolor: "background.paper",
+              boxShadow: 24,
+              p: 4,
+              borderRadius: 2,
+              height: "450px",
+              maxHeight: "80vh",
+              overflowY: "auto",
+
+
+            }}
+          >
+            <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+              <Typography variant="h6">Advanced Filters</Typography>
+              <IconButton onClick={() => setModalOpen(false)}>
+                <CloseIcon />
+              </IconButton>
+            </Box>
+            <SidebarContent />
+          </Box>
+        </Modal>
+      )}
+      {isMobile && (
+        <Button onClick={() => setModalOpen(true)} sx={{ mt: 2 ,color:'#45C0CD'}}>
+          Open Filters
+        </Button>
+      )}
+    </Box>
+  );
 };
 
 export default SidebarFilter;
-

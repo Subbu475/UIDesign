@@ -6,7 +6,7 @@ import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 const IconWithBadge = () => {
 
   const cartCount = 5;
-  const favoriteCount = 2;
+  const favoriteCount = 3;
 
   return (
     <div>
